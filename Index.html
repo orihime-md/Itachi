@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#09080d" />
+<title>Itachi Uchiha — Akatsuki Wind Portrait</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.175.0/examples/jsm/"}}
+</script>
+<style>
+:root{--bg:#09080d;--ink:#f6eee8;--muted:#b8aaa9;--red:#c82f42;--red2:#f04a58;--line:rgba(255,255,255,.13);--glass:rgba(11,9,15,.74);--display:'Cinzel',Georgia,serif;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}body{touch-action:pan-y}#app{position:relative;width:100%;height:100%;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 45%,#25121c 0%,#09080d 70%)}#stage{position:absolute;inset:0}#stage canvas{display:block;width:100%;height:100%;outline:none}.vignette,.grain{position:absolute;inset:0;pointer-events:none}.vignette{z-index:2;background:radial-gradient(ellipse at center,transparent 38%,rgba(4,3,7,.25) 74%,rgba(4,3,7,.82) 125%)}.grain{z-index:3;opacity:.085;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E")}
+header{position:absolute;top:clamp(18px,4vh,42px);left:clamp(18px,4vw,54px);z-index:5;max-width:75vw;pointer-events:none}.eyebrow{font:500 10px var(--mono);letter-spacing:.28em;color:#e05b68;text-transform:uppercase;display:flex;align-items:center;gap:10px}.eyebrow:before{content:'';width:25px;height:1px;background:#e05b68;box-shadow:0 0 10px #d72e46}.title{font:600 clamp(27px,4.4vw,58px)/1.05 var(--display);letter-spacing:.015em;margin:12px 0 8px;text-shadow:0 4px 30px #000}.subtitle{font:10px/1.8 var(--mono);letter-spacing:.14em;color:#c3b7b7;text-transform:uppercase}.top-right{position:absolute;top:clamp(20px,4vh,40px);right:clamp(16px,4vw,52px);z-index:5;text-align:right;font:10px/1.9 var(--mono);letter-spacing:.12em;color:#afa1a4;pointer-events:none}.top-right strong{color:#f27a85;font-weight:500}.rule{height:1px;max-width:220px;margin:12px 0 0 auto;background:linear-gradient(90deg,transparent,rgba(216,73,88,.55))}
+.control-dock{position:absolute;z-index:6;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;align-items:center;gap:13px;width:min(680px,calc(100vw - 24px));padding:12px 14px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(125deg,rgba(15,12,19,.86),rgba(24,12,20,.70));box-shadow:0 18px 60px #0008,inset 0 1px #ffffff0c;backdrop-filter:blur(18px)}.wind-label{display:flex;flex-direction:column;gap:7px;min-width:0;flex:1}.wind-head{display:flex;align-items:center;justify-content:space-between;gap:10px;font:9px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:#c7b8ba}.wind-head output{font-size:10px;color:#ff6877}.wind-slider{accent-color:#d54354;width:100%;height:15px;margin:0;cursor:pointer}.buttons{display:flex;gap:7px;align-items:center}.btn{appearance:none;border:1px solid rgba(255,255,255,.16);border-radius:9px;background:#ffffff08;color:#e9dfe0;padding:10px 12px;font:9px var(--mono);letter-spacing:.06em;white-space:nowrap;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}.btn:hover{background:#7d2133aa;border-color:#ed6372}.btn:active{transform:scale(.97)}.btn.primary{background:linear-gradient(135deg,#a51e34,#651729);border-color:#d04a5d;color:#fff;box-shadow:0 5px 20px #c2263c22}.bottom-note{position:absolute;z-index:5;left:clamp(18px,4vw,54px);bottom:27px;color:#a99ca1;font:9px/1.9 var(--mono);letter-spacing:.13em;text-transform:uppercase;text-shadow:0 2px 15px black;pointer-events:none}.bottom-note span{color:#e65b6a}.crosshair{position:absolute;left:50%;top:50%;width:34px;height:34px;transform:translate(-50%,-50%);z-index:4;opacity:.22;pointer-events:none}.crosshair:before,.crosshair:after{content:'';position:absolute;background:#f8dadd}.crosshair:before{height:1px;width:34px;top:16px}.crosshair:after{width:1px;height:34px;left:16px}.crosshair i{position:absolute;width:5px;height:5px;border:1px solid #f8dadd;border-radius:50%;left:14px;top:14px}.loading{position:absolute;inset:0;z-index:10;display:grid;place-items:center;background:#09080d;transition:opacity .6s}.loading.hide{opacity:0;pointer-events:none}.loadbox{text-align:center}.spinner{width:42px;height:42px;margin:0 auto 18px;border:1px solid #562330;border-top-color:#eb5364;border-radius:50%;animation:spin .9s linear infinite}.loadtitle{font:12px var(--mono);letter-spacing:.2em;color:#e4d4d7}.loadsub{font:9px var(--mono);letter-spacing:.14em;color:#86767c;margin-top:9px}@keyframes spin{to{transform:rotate(360deg)}}#error{position:absolute;inset:auto 16px 110px;z-index:9;padding:12px;background:#37121c;color:#ffe7e9;border:1px solid #9b3548;border-radius:10px;font:12px/1.5 var(--mono);display:none}
+@media(max-width:600px){header{top:18px}.title{font-size:clamp(27px,8.5vw,42px)}.subtitle{font-size:8px;letter-spacing:.08em}.top-right{top:21px;font-size:8px}.top-right .hide-small{display:none}.control-dock{gap:10px;padding:10px;border-radius:13px}.btn{padding:10px 9px;font-size:8px}.buttons{gap:5px}.bottom-note{bottom:86px;font-size:8px}.crosshair{display:none}}
+@media(max-width:380px){.top-right{display:none}.control-dock{flex-wrap:wrap}.wind-label{flex-basis:100%}.buttons{width:100%;justify-content:space-between}.btn{flex:1}}
+</style>
+</head>
+<body>
+<main id="app">
+  <div id="stage" aria-label="Animated 3D Itachi Uchiha portrait"></div>
+  <div class="vignette"></div><div class="grain"></div>
+  <header>
+    <div class="eyebrow">Akatsuki · No. 08</div>
+    <h1 class="title">Itachi Uchiha</h1>
+    <div class="subtitle">The Silent Flame <span style="color:#e95768">/</span> Wind Study</div>
+  </header>
+  <div class="top-right"><div>SHARINGAN <strong>ACTIVE</strong></div><div class="hide-small">CLOAK PHYSICS <strong>LIVE</strong></div><div class="rule"></div></div>
+  <div class="crosshair"><i></i></div>
+  <div class="bottom-note">Wind carries <span>every secret.</span><br>Drag to orbit · Scroll to zoom</div>
+  <section class="control-dock" aria-label="Scene controls">
+    <label class="wind-label"><div class="wind-head"><span>Atmospheric wind</span><output id="wind-value">1.15×</output></div><input id="wind-slider" class="wind-slider" type="range" min="0" max="2.4" step="0.05" value="1.15" /></label>
+    <div class="buttons"><button id="pause-btn" class="btn" type="button">Pause motion</button><button id="audio-btn" class="btn" type="button" aria-pressed="false">Wind audio off</button><button id="reset-btn" class="btn primary" type="button">Reset view</button></div>
+  </section>
+  <div class="loading" id="loading"><div class="loadbox"><div class="spinner"></div><div class="loadtitle">SUMMONING SHINOBI</div><div class="loadsub">BUILDING SHADERS · CLOTH · ATMOSPHERE</div></div></div>
+  <div id="error"></div>
+</main>
+<script>
+// Detect browsers/file viewers that block JavaScript ES-module imports (common with content:// previews).
+window.__itachiModuleStarted = false;
+window.__itachiBootWatchdog = setTimeout(() => {
+  if (window.__itachiModuleStarted) return;
+  const loading = document.getElementById('loading');
+  const box = document.querySelector('.loadbox');
+  if (loading && box) {
+    box.innerHTML = '<div class="loadtitle">GRAPHICS MODULE DID NOT LOAD</div><div class="loadsub" style="max-width:290px;line-height:1.8;margin:12px auto 0">This file is open in a local preview that may block Three.js modules. Open it through a web server or host it on GitHub Pages, then reload.</div>';
+    const spinner = box.querySelector('.spinner'); if (spinner) spinner.style.display = 'none';
+  }
+}, 9000);
+</script>
+<script type="module">
+window.__itachiModuleStarted = true;
+clearTimeout(window.__itachiBootWatchdog);
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const stage=document.getElementById('stage');
+const errorBox=document.getElementById('error');
+let renderer,scene,camera,controls,composer,clock;
+let wind=1.15,paused=false, audioCtx=null,audioNodes=null;
+const animatedCloth=[], windLines=[], emberVelocity=[];
+let embers=null, skyMaterial=null;
+const model=new THREE.Group();
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const smooth=(a,b,x)=>{const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t)};
+const seeded=(seed)=>()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296};
+const rand=seeded(81008);
+// Deterministic value noise, multi-octave fBm and a curl field steer the fabric and air.
+const fract=x=>x-Math.floor(x);
+function hash2(x,y){return fract(Math.sin(x*127.1+y*311.7+19.19)*43758.5453123);}
+function valueNoise2D(x,y){const ix=Math.floor(x),iy=Math.floor(y),fx=x-ix,fy=y-iy;const ux=fx*fx*(3-2*fx),uy=fy*fy*(3-2*fy);const a=hash2(ix,iy),b=hash2(ix+1,iy),c=hash2(ix,iy+1),d=hash2(ix+1,iy+1);return (a+(b-a)*ux)*(1-uy)+(c+(d-c)*ux)*uy;}
+function fbm2D(x,y,octaves=3){let total=0,amp=.5,norm=0;for(let i=0;i<octaves;i++){total+=valueNoise2D(x,y)*amp;norm+=amp;x=x*2.03+17.1;y=y*2.01-9.2;amp*=.5;}return total/norm;}
+function curlNoise2D(x,y){const e=.035;const dx=fbm2D(x+e,y,2)-fbm2D(x-e,y,2);const dy=fbm2D(x,y+e,2)-fbm2D(x,y-e,2);return [dy,-dx];}
+
+function makeFabricTexture(){
+ const c=document.createElement('canvas');c.width=256;c.height=512;const ctx=c.getContext('2d');
+ const g=ctx.createLinearGradient(0,0,256,0);g.addColorStop(0,'#17151b');g.addColorStop(.18,'#28242c');g.addColorStop(.35,'#15131a');g.addColorStop(.51,'#312a33');g.addColorStop(.68,'#17141b');g.addColorStop(.86,'#242029');g.addColorStop(1,'#111016');ctx.fillStyle=g;ctx.fillRect(0,0,256,512);
+ for(let i=0;i<11000;i++){const a=rand()*.15;ctx.fillStyle=rand()>.5?`rgba(245,225,230,${a})`:`rgba(0,0,0,${a*1.5})`;ctx.fillRect(rand()*256,rand()*512,rand()*1.5+.2,rand()*4+.5)}
+ for(let x=0;x<256;x+=12){ctx.fillStyle='rgba(0,0,0,.12)';ctx.fillRect(x,0,2,512)}
+ const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;tex.wrapS=THREE.RepeatWrapping;tex.wrapT=THREE.RepeatWrapping;tex.anisotropy=4;return tex;
+}
+function makeCloudShape(){
+ const s=new THREE.Shape();s.moveTo(-.34,-.02);s.bezierCurveTo(-.43,.06,-.39,.19,-.25,.18);s.bezierCurveTo(-.19,.32,-.01,.31,.055,.18);s.bezierCurveTo(.16,.31,.37,.25,.36,.09);s.bezierCurveTo(.48,.01,.39,-.12,.23,-.1);s.bezierCurveTo(.12,-.2,-.04,-.17,-.12,-.1);s.bezierCurveTo(-.24,-.16,-.37,-.13,-.34,-.02);return s;
+}
+function makeTube(points,radius,material,segments=24){const curve=new THREE.CatmullRomCurve3(points.map(p=>Array.isArray(p)?new THREE.Vector3(...p):p));const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,segments,radius,5,false),material);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
+function material(color,roughness=.7,metalness=0,extra={}){return new THREE.MeshStandardMaterial({color,roughness,metalness,...extra});}
+function addMesh(parent,geo,mat,pos=[0,0,0],scale=null){const m=new THREE.Mesh(geo,mat);m.position.set(...pos);if(scale)m.scale.set(...scale);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
+function coneBetween(parent,base,tip,radius,mat,radial=7){const a=new THREE.Vector3(...base),b=new THREE.Vector3(...tip),d=b.clone().sub(a);const geo=new THREE.ConeGeometry(radius,d.length(),radial,1);const mesh=new THREE.Mesh(geo,mat);mesh.position.copy(a.add(b).multiplyScalar(.5));mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh;}
+
+// The base mantle is a deformed high-resolution mesh, rather than a static flat polygon.
+function cloakWidth(r){return 1.0+.40*Math.exp(-Math.pow((r-.16)/.12,2))-.22*Math.exp(-Math.pow((r-.50)/.26,2))+.45*Math.pow(r,5);}
+function clothPoint(u,r,t,w){const width=cloakWidth(r);const flap=Math.pow(r,1.3)*w;const phase=t*2.05-r*5.3+u*2.25;const curl=curlNoise2D(u*2.5+t*.10,r*3.2-t*.075);const clothNoise=fbm2D(u*3.4+t*.07,r*4.1,2)-.5;const dx=Math.sin(phase)*flap*(.10+.13*Math.abs(u)) + Math.sin(t*1.05+r*8+u*4)*flap*.035 + curl[0]*flap*.68 + clothNoise*flap*.045;const dz=.18+.10*(1-Math.abs(u)) + Math.sin(t*2.6-r*7+u*4.4)*Math.pow(r,1.65)*w*.105 + Math.cos(t*1.4+u*5+r*3)*Math.pow(r,2)*.028 + curl[1]*Math.pow(r,1.5)*w*.31;return [u*width+dx,4.94-4.57*r,dz];}
+function createCloth(){
+ const nx=42,ny=52,verts=[],uvs=[],indices=[];
+ for(let j=0;j<=ny;j++){const r=j/ny;for(let i=0;i<=nx;i++){const u=i/nx*2-1,p=clothPoint(u,r,0,wind);verts.push(...p);uvs.push(i/nx,1-r);}}
+ for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const a=j*(nx+1)+i,b=a+nx+1;indices.push(a,b,a+1,b,b+1,a+1);}
+ const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));geo.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));geo.setIndex(indices);geo.computeVertexNormals();
+ const mat=material('#d0c5cc',.94,.01,{map:makeFabricTexture(),side:THREE.DoubleSide});
+ mat.onBeforeCompile=(shader)=>{shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>\n float foldShade = sin(vUv.x * 44.0 + sin(vUv.y * 5.7) * 1.6);\n float deepFold = sin(vUv.x * 18.0 - vUv.y * 4.0);\n diffuseColor.rgb *= 0.93 + foldShade * 0.045 + deepFold * 0.025;`)};
+ const mesh=new THREE.Mesh(geo,mat);mesh.castShadow=true;mesh.receiveShadow=true;model.add(mesh);animatedCloth.push({geo,nx,ny,mesh});
+ // Red-black inner lining peeks out at the opening and hem.
+ const lining=material('#75172b',.76,.02,{side:THREE.DoubleSide,emissive:'#21040a',emissiveIntensity:.22});
+ const inner=addMesh(model,new THREE.CylinderGeometry(.28,.83,4.18,16,1,true,Math.PI*.12,Math.PI*.76),lining,[0,2.78,.04]);inner.scale.set(1,.98,.72);inner.rotation.y=Math.PI;
+ // Two dark front lapels frame the central opening.
+ const lapelMat=material('#0c0b11',.58,.04,{side:THREE.DoubleSide});
+ const leftShape=new THREE.Shape();leftShape.moveTo(-.38,4.94);leftShape.lineTo(-.76,4.58);leftShape.lineTo(-.48,3.35);leftShape.lineTo(-.10,2.85);leftShape.lineTo(-.18,4.16);leftShape.close();
+ const rightShape=new THREE.Shape();rightShape.moveTo(.38,4.94);rightShape.lineTo(.76,4.58);rightShape.lineTo(.48,3.35);rightShape.lineTo(.10,2.85);rightShape.lineTo(.18,4.16);rightShape.close();
+ for(const s of [leftShape,rightShape]){const g=new THREE.ShapeGeometry(s,16);const m=addMesh(model,g,lapelMat,[0,0,.06]);m.position.z=.36;}
+ return {mesh,nx,ny};
+}
+function createCloudBadge(parent,scale=1){
+ const shape=makeCloudShape();const geo=new THREE.ShapeGeometry(shape,22);const red=new THREE.MeshStandardMaterial({color:'#b51d35',roughness:.46,metalness:.08,emissive:'#26020b',emissiveIntensity:.16,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
+ const g=new THREE.Group();const face=new THREE.Mesh(geo,red);face.position.z=.012;face.castShadow=true;g.add(face);
+ const pts=shape.getPoints(55).map(p=>new THREE.Vector3(p.x,p.y,.026));pts.push(pts[0].clone());const curve=new THREE.CatmullRomCurve3(pts);const outline=new THREE.Mesh(new THREE.TubeGeometry(curve,120,.012,5,false),material('#ddd0ce',.7,.05));g.add(outline);g.scale.setScalar(scale);parent.add(g);return g;
+}
+function buildCloakAccessories(){
+ const matte=material('#101017',.85,.02),red=material('#7e1428',.58,.05,{emissive:'#22030a',emissiveIntensity:.2}),edge=material('#9b2538',.55,.04,{emissive:'#29050b',emissiveIntensity:.18});
+ // High collar with visible crimson lining.
+ const collar=addMesh(model,new THREE.CylinderGeometry(.49,.77,.58,32,1,true),matte,[0,4.78,.02]);collar.scale.set(1,.98,.76);collar.rotation.x=.05;
+ const collarInner=addMesh(model,new THREE.CylinderGeometry(.50,.68,.105,32,1,true),red,[0,4.52,.025]);collarInner.scale.z=.78;
+ const collarTrim=addMesh(model,new THREE.TorusGeometry(.60,.035,8,36),edge,[0,4.50,.03]);collarTrim.rotation.x=Math.PI/2;collarTrim.scale.set(1,.78,1);
+ // Sleeves are tapered, segmented meshes and drift subtly as the mantle catches the wind.
+ const sleeveMaterial=material('#17151c',.82,.015,{map:makeFabricTexture()});
+ const sleeves=[];
+ for(const side of [-1,1]){
+  const shoulder=new THREE.Vector3(side*.88,4.32,.06),wrist=new THREE.Vector3(side*1.62,2.76,.17);const d=shoulder.clone().sub(wrist);
+  const sleeve=new THREE.Mesh(new THREE.CylinderGeometry(.37,.50,d.length(),18,12,true),sleeveMaterial);sleeve.position.copy(shoulder.clone().add(wrist).multiplyScalar(.5));sleeve.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.clone().normalize());sleeve.castShadow=true;sleeve.receiveShadow=true;model.add(sleeve);sleeves.push({sleeve,side});
+  const cuff=new THREE.Mesh(new THREE.TorusGeometry(.43,.033,7,24),edge);cuff.position.copy(wrist);cuff.rotation.set(.2,0,side*.42);cuff.scale.set(1,.83,1);model.add(cuff);
+  // A pale hand and simplified separated fingers emerge from the sleeves.
+  const hand=material('#d2b9ae',.73,0),handPos=[side*1.64,2.59,.22];addMesh(model,new THREE.SphereGeometry(.13,16,12),hand,handPos,[.78,1.35,.65]);
+  for(let k=0;k<3;k++){const x=side*(1.60+k*.065);const finger=addMesh(model,new THREE.CapsuleGeometry(.035,.12,3,7),hand,[x,2.42,.23],[.85,1,.75]);finger.rotation.z=side*(.05+k*.12);}
+  // Sandal tips peek just beneath the robe hem to keep the stance grounded.
+  addMesh(model,new THREE.SphereGeometry(1,16,12),matte,[side*.39,.13,.28],[.19,.085,.29]);
+  const strap=makeTube([[side*.30,.19,.40],[side*.39,.235,.47],[side*.48,.19,.40]],.018,edge,12);model.add(strap);
+ }
+ // Additional thin red piping follows the collar-to-hem silhouette.
+ const pipingMat=material('#6e1527',.55,.05,{emissive:'#21030a',emissiveIntensity:.13});
+ for(const side of [-1,1]){const points=[];for(let i=0;i<=24;i++){const r=i/24;const u=side*.985;const p=clothPoint(u,r,0,0);points.push([p[0],p[1],p[2]+.014]);}const pipe=makeTube(points,.012,pipingMat,70);model.add(pipe);}
+ return sleeves;
+}
+function buildFaceAndHair(){
+ const skin=material('#d8c0b7',.73,.01),skinLight=material('#ead2c8',.69,.0),skinShade=material('#977b78',.82,0),hair=material('#111016',.37,.06),hairLight=material('#25212b',.34,.07),redIris=material('#d91f3c',.27,.1,{emissive:'#8e071b',emissiveIntensity:.38}),black=material('#09080d',.38,.03),eyeWhite=material('#eaded9',.42,0),metal=material('#7d858d',.36,.72),metalLight=material('#c0c3c6',.28,.78),scratch=material('#26252a',.55,.45);
+ // Neck hidden partly by the high collar.
+ addMesh(model,new THREE.CylinderGeometry(.22,.27,.46,18),skin,[0,4.91,.02]);
+ // Extruded face silhouette gives Itachi a tapering anime jaw rather than a round ball.
+ const faceShape=new THREE.Shape();faceShape.moveTo(-.43,.35);faceShape.bezierCurveTo(-.48,.55,-.30,.64,0,.64);faceShape.bezierCurveTo(.30,.64,.48,.55,.43,.35);faceShape.bezierCurveTo(.41,.10,.33,-.30,.18,-.48);faceShape.bezierCurveTo(.10,-.59,.04,-.63,0,-.63);faceShape.bezierCurveTo(-.04,-.63,-.10,-.59,-.18,-.48);faceShape.bezierCurveTo(-.33,-.30,-.41,.10,-.43,.35);
+ const faceGeo=new THREE.ExtrudeGeometry(faceShape,{depth:.30,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:.025,bevelThickness:.025,curveSegments:18});
+ const face=addMesh(model,faceGeo,skin,[0,5.52,-.15]);face.castShadow=true;
+ // Soft cheek planes and ears add dimensional shading.
+ for(const side of [-1,1]){
+  addMesh(model,new THREE.SphereGeometry(.12,16,12),skin,[side*.44,5.52,.04],[.55,1.22,.62]);
+  addMesh(model,new THREE.SphereGeometry(.065,12,10),skinShade,[side*.45,5.52,.17],[.52,1.18,.45]);
+  // Long face-framing locks, sweeping down beside the jaw.
+  coneBetween(model,[side*.48,6.08,.22],[side*.52,5.05,.25],.145,hair,7);
+  coneBetween(model,[side*.42,5.96,.39],[side*.35,5.22,.43],.095,hairLight,6);
+ }
+ // Hair cap and sharp irregular spikes, built from tapered meshes.
+ addMesh(model,new THREE.SphereGeometry(1,24,18),hair,[0,6.08,.02],[.56,.44,.43]);
+ const spikes=[
+  [[-.39,6.27,.06],[-.70,6.50,-.02],.17], [[-.24,6.39,.04],[-.43,6.78,-.03],.16], [[-.06,6.43,.02],[-.13,6.83,-.02],.15], [[.13,6.42,.02],[.26,6.80,-.02],.16], [[.34,6.31,.02],[.62,6.58,-.03],.17],
+  [[-.48,6.12,.10],[-.77,6.30,.02],.13], [[.47,6.11,.10],[.75,6.30,.02],.13], [[-.34,6.31,.32],[-.48,6.52,.28],.11], [[.28,6.34,.32],[.43,6.54,.26],.11],
+  [[-.19,6.31,.41],[-.26,5.87,.47],.115], [[.02,6.33,.43],[.025,5.94,.49],.10], [[.22,6.30,.41],[.28,5.90,.47],.12], [[-.43,6.20,.36],[-.49,5.81,.40],.13], [[.42,6.18,.36],[.49,5.85,.40],.13]
+ ];spikes.forEach((s,i)=>coneBetween(model,s[0],s[1],s[2],i%3===0?hairLight:hair,7));
+ // A few fine sculpted streaks catch the rim light on the hair.
+ for(const side of [-1,1]){const pts=[];for(let i=0;i<5;i++)pts.push([side*(.18+i*.045),6.38-i*.10,.39-i*.012]);const strand=makeTube(pts,.008,material('#3e3743',.5,.1),16);model.add(strand);}
+ // Eyes: layered outlines, whites, red irises, pupils and the three tomoe marks.
+ for(const side of [-1,1]){
+  const x=side*.192,y=5.635,z=.205;
+  addMesh(model,new THREE.SphereGeometry(1,20,14),black,[x,y,z+.119],[.145,.078,.045]);
+  addMesh(model,new THREE.SphereGeometry(1,20,14),eyeWhite,[x,y+.002,z+.151],[.127,.057,.036]);
+  addMesh(model,new THREE.SphereGeometry(1,20,14),redIris,[x-side*.008,y,z+.185],[.052,.052,.021]);
+  addMesh(model,new THREE.TorusGeometry(.048,.0055,6,24),material('#f16a78',.3,.04,{emissive:'#7e091a',emissiveIntensity:.3}),[x-side*.008,y,z+.204]);
+  addMesh(model,new THREE.SphereGeometry(.019,12,10),black,[x-side*.008,y,z+.209],[.78,1,.65]);
+  for(let k=0;k<3;k++){const a=k*Math.PI*2/3+.35;addMesh(model,new THREE.SphereGeometry(.009,8,6),black,[x-side*.008+Math.cos(a)*.034,y+Math.sin(a)*.034,z+.211],[1,1, .7]);}
+  // Heavy upper eyelid, sharp outer corner, and brow.
+  const upper=makeTube([[x-.13,y+.027,z+.195],[x,y+.066,z+.202],[x+.115,y+.022,z+.19]],.018,black,20);model.add(upper);
+  const brow=makeTube([[x-.13,y+.105,z+.155],[x,y+.14,z+.17],[x+.13,y+.10,z+.15]],.028,hair,18);model.add(brow);
+  // Signature narrow tear-track lines under both eyes.
+  const mark=makeTube([[side*.15,5.56,.22],[side*.17,5.43,.237],[side*.205,5.27,.232]],.012,skinShade,20);model.add(mark);
+  const markHighlight=makeTube([[side*.167,5.53,.24],[side*.184,5.43,.245],[side*.218,5.28,.235]],.003,skinLight,16);model.add(markHighlight);
+ }
+ // Nose bridge and a small, deliberately subtle anime nose.
+ addMesh(model,new THREE.SphereGeometry(.055,14,12),skinLight,[0,5.48,.26],[.50,1.18,.72]);
+ addMesh(model,new THREE.SphereGeometry(.035,12,8),skinShade,[0,5.43,.285],[.78,.5,.6]);
+ const noseLine=makeTube([[0,5.58,.27],[.012,5.50,.30],[.035,5.45,.29]],.006,skinShade,12);model.add(noseLine);
+ const mouth=makeTube([[-.075,5.23,.194],[0,5.215,.205],[.075,5.23,.194]],.008,material('#5e383b',.82),12);model.add(mouth);
+ const lowerLip=makeTube([[-.042,5.19,.19],[0,5.185,.196],[.04,5.19,.19]],.003,skinLight,8);model.add(lowerLip);
+ // Forehead protector: dark fabric strap, steel plate, leaf engraving and a diagonal scratch.
+ const strap=material('#18202d',.84,.02),plate=new THREE.Group();model.add(plate);
+ addMesh(model,new THREE.BoxGeometry(1.00,.145,.065),strap,[0,6.025,.445]);
+ addMesh(model,new THREE.BoxGeometry(.63,.22,.055),metal,[0,6.03,.494]);
+ addMesh(model,new THREE.BoxGeometry(.59,.18,.012),metalLight,[0,6.03,.526]);
+ for(const side of [-1,1])for(const yy of [-.064,.064])addMesh(model,new THREE.SphereGeometry(.016,9,8),material('#4d5259',.32,.68),[side*.265,6.03+yy,.54]);
+ // Engraved leaf-like swirl.
+ const engraving=material('#38404a',.46,.38);model.add(makeTube([[ -.09,6.02,.542],[-.03,6.07,.545],[.055,6.07,.545],[.095,6.025,.545],[.045,5.99,.545],[-.005,6.015,.545],[.03,6.035,.545]],.008,engraving,40));
+ model.add(makeTube([[.01,6.04,.546],[.035,6.085,.546],[.085,6.105,.546]],.006,engraving,12));
+ // Clearly readable scratched slash across the plate.
+ model.add(makeTube([[-.24,6.108,.554],[-.10,6.045,.557],[.04,5.99,.557],[.21,5.95,.554]],.014,scratch,22));
+ model.add(makeTube([[-.19,6.11,.559],[-.07,6.06,.56]],.004,metalLight,12));
+}
+function buildBadges(){
+ const placements=[[-.68,3.72,.72], [.04,4.24,.63],[.67,3.60,.67],[-.62,2.52,.68],[.60,2.45,.68]];
+ const badges=[];for(const [x,y,s] of placements){const g=createCloudBadge(model,s);badges.push({g,x,y,r:(4.94-y)/4.57,u:x/cloakWidth((4.94-y)/4.57)});}
+ // Small dark-red clasp at the collar.
+ const clasp=material('#a21d34',.4,.44,{emissive:'#410612',emissiveIntensity:.25});addMesh(model,new THREE.SphereGeometry(.065,16,12),clasp,[0,4.53,.57],[.82,1,.48]);
+ return badges;
+}
+function makeSky(){
+ const geo=new THREE.SphereGeometry(80,48,32);
+ const mat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,uniforms:{uTime:{value:0}},vertexShader:`varying vec3 vLocal; void main(){vLocal=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,fragmentShader:`varying vec3 vLocal; uniform float uTime;
+ float hash21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
+ float noise21(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(hash21(i),hash21(i+vec2(1.0,0.0)),f.x),mix(hash21(i+vec2(0.0,1.0)),hash21(i+vec2(1.0)),f.x),f.y);}
+ float fbm(vec2 p){float v=0.0,a=.52;for(int i=0;i<5;i++){v+=noise21(p)*a;p=mat2(1.62,1.08,-1.08,1.62)*p+vec2(7.1,-3.7);a*=.5;}return v;}
+ void main(){vec3 dir=normalize(vLocal);float h=dir.y;float horizon=1.0-smoothstep(-.20,.52,h);vec3 top=vec3(.014,.013,.026);vec3 mid=vec3(.075,.025,.050);vec3 low=vec3(.34,.055,.091);vec3 col=mix(top,mid,smoothstep(.08,.83,horizon));col=mix(col,low,pow(max(horizon,0.0),3.4)*.52);vec2 p=vec2(vLocal.x*.082+uTime*.027,vLocal.y*.13+sin(vLocal.x*.025+uTime*.08)*.6);float clouds=fbm(p);float layers=fbm(p*1.85+vec2(-uTime*.04,2.6));float cloudMask=smoothstep(.40,.72,clouds*.68+layers*.42);float haze=smoothstep(-.25,.23,horizon)*(1.0-smoothstep(.10,.98,abs(h+.04)));col+=vec3(.16,.025,.052)*cloudMask*haze*.95;col+=vec3(.07,.025,.06)*smoothstep(.52,.85,layers)*horizon*.42;float radial=exp(-abs(h+.04)*7.0);col+=vec3(.19,.025,.055)*radial*.17;gl_FragColor=vec4(col,1.0);}`});
+ const sky=new THREE.Mesh(geo,mat);scene.add(sky);return mat;
+}
+function makeWindRibbons(){
+ const colors=[0x9f3447,0x5e4b58,0xb3a0a7,0x7b1d33];
+ for(let i=0;i<24;i++){
+  const count=38,arr=new Float32Array(count*3),geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(arr,3));
+  const mat=new THREE.LineBasicMaterial({color:colors[i%colors.length],transparent:true,opacity:.12+(i%5)*.035,depthWrite:false,blending:i%3===0?THREE.AdditiveBlending:THREE.NormalBlending});
+  const line=new THREE.Line(geo,mat);line.frustumCulled=false;scene.add(line);windLines.push({line,count,seed:rand()*8,phase:rand()*Math.PI*2,y:.45+rand()*6.5,z:-4-rand()*4,span:4+rand()*7,speed:.3+rand()*1.2,amp:.05+rand()*.38});
+ }
+}
+function makeEmbers(){
+ const count=480,positions=new Float32Array(count*3),colors=new Float32Array(count*3),sizes=new Float32Array(count);
+ const c1=new THREE.Color('#ff4a5d'),c2=new THREE.Color('#be6a5b'),c3=new THREE.Color('#e6d5d6');
+ for(let i=0;i<count;i++){positions[i*3]=(rand()-.5)*15;positions[i*3+1]=rand()*7.7;positions[i*3+2]=(rand()-.5)*10-1.2;const col=rand()>.82?c3:(rand()>.45?c1:c2);colors[i*3]=col.r;colors[i*3+1]=col.g;colors[i*3+2]=col.b;sizes[i]=rand();emberVelocity.push({up:.16+rand()*.7,side:(rand()-.5)*.3,phase:rand()*Math.PI*2});}
+ const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(positions,3));geo.setAttribute('color',new THREE.BufferAttribute(colors,3));geo.setAttribute('aSize',new THREE.BufferAttribute(sizes,1));
+ const mat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,vertexShader:`attribute float aSize; varying vec3 vColor; uniform float uTime; void main(){vColor=color;vec4 mv=modelViewMatrix*vec4(position,1.0);gl_PointSize=(2.0+aSize*4.0)*(300.0/-mv.z);gl_Position=projectionMatrix*mv;}`,fragmentShader:`varying vec3 vColor; void main(){vec2 p=gl_PointCoord-.5;float d=length(p);float a=smoothstep(.5,.0,d);float core=smoothstep(.22,.0,d);gl_FragColor=vec4(vColor*(.65+core*1.8),a*.55);}`,vertexColors:true,uniforms:{uTime:{value:0}}});
+ const pts=new THREE.Points(geo,mat);pts.frustumCulled=false;scene.add(pts);return pts;
+}
+function makeGround(){
+ const ground=addMesh(scene,new THREE.PlaneGeometry(200,200),material('#09080d',.98),[0,-.08,0]);ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;
+ const disk=addMesh(scene,new THREE.CylinderGeometry(2.0,2.12,.08,72),material('#151018',.83,.18),[0,.015,0]);
+ const ringMat=new THREE.MeshBasicMaterial({color:'#a8273b',transparent:true,opacity:.64});const ring=addMesh(scene,new THREE.TorusGeometry(2.18,.014,8,96),ringMat,[0,.06,0]);ring.rotation.x=Math.PI/2;
+ const ring2=addMesh(scene,new THREE.TorusGeometry(2.43,.006,6,96),new THREE.MeshBasicMaterial({color:'#e65767',transparent:true,opacity:.24}),[0,.055,0]);ring2.rotation.x=Math.PI/2;
+ // A low red reflection beneath the figure anchors the feet to the floor.
+ const glow=addMesh(scene,new THREE.CircleGeometry(2.2,64),new THREE.MeshBasicMaterial({color:'#7a1428',transparent:true,opacity:.13,side:THREE.DoubleSide}),[0,.025,0]);glow.rotation.x=-Math.PI/2;
+}
+
+let sleeves=[],badges=[];
+function init(){
+ scene=new THREE.Scene();scene.fog=new THREE.FogExp2('#160b13',.018);
+ camera=new THREE.PerspectiveCamera(38,innerWidth/innerHeight,.1,150);camera.position.set(0,3.45,13.8);
+ renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.7));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;stage.appendChild(renderer.domElement);
+ const pmrem=new THREE.PMREMGenerator(renderer);const env=pmrem.fromScene(new RoomEnvironment(),.04).texture;scene.environment=env;pmrem.dispose();
+ scene.add(new THREE.HemisphereLight('#c6b8d5','#140b13',1.35));
+ const key=new THREE.DirectionalLight('#f5dbe1',3.1);key.position.set(-4.5,8,7);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-5;key.shadow.camera.right=5;key.shadow.camera.top=9;key.shadow.camera.bottom=-2;key.shadow.bias=-.00025;scene.add(key);
+ const fill=new THREE.DirectionalLight('#6886b5',1.25);fill.position.set(4,5,3);scene.add(fill);
+ const rim=new THREE.PointLight('#db243d',95,13,2);rim.position.set(-3,4.2,-1.7);scene.add(rim);
+ const rim2=new THREE.PointLight('#87234e',78,12,2);rim2.position.set(3,3,-2);scene.add(rim2);
+ const faceLight=new THREE.PointLight('#f5bec1',17,7,2);faceLight.position.set(0,5.3,4);scene.add(faceLight);
+ skyMaterial=makeSky();makeGround();makeWindRibbons();embers=makeEmbers();
+ scene.add(model);createCloth();sleeves=buildCloakAccessories();buildFaceAndHair();badges=buildBadges();
+ // Keep the character fixed in a composed, frontal stance; the user can still gently orbit the view.
+ model.position.set(0,0,0);
+ controls=new OrbitControls(camera,renderer.domElement);controls.target.set(0,3.37,0);controls.enableDamping=true;controls.dampingFactor=.055;controls.minDistance=9;controls.maxDistance=19;controls.minPolarAngle=Math.PI*.29;controls.maxPolarAngle=Math.PI*.62;controls.enablePan=false;controls.rotateSpeed=.42;controls.zoomSpeed=.55;
+ composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.48,.65,.72);composer.addPass(bloom);composer.addPass(new OutputPass());
+ clock=new THREE.Clock();window.addEventListener('resize',onResize);document.getElementById('wind-slider').addEventListener('input',e=>{wind=Number(e.target.value);document.getElementById('wind-value').textContent=wind.toFixed(2)+'×';if(audioNodes)audioNodes.filter.frequency.setTargetAtTime(180+wind*135,audioCtx.currentTime,.15);});
+ document.getElementById('pause-btn').addEventListener('click',e=>{paused=!paused;e.currentTarget.textContent=paused?'Resume motion':'Pause motion';if(paused)clock.stop();else clock.start();});
+ document.getElementById('reset-btn').addEventListener('click',()=>{controls.target.set(0,3.37,0);camera.position.set(0,3.45,13.8);controls.update();});
+ document.getElementById('audio-btn').addEventListener('click',toggleAudio);
+ document.getElementById('loading').classList.add('hide');setTimeout(()=>document.getElementById('loading').remove(),800);
+ animate();
+}
+function onResize(){if(!renderer)return;camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.7));renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);}
+function updateCloth(t){for(const item of animatedCloth){const pos=item.geo.attributes.position;let k=0;for(let j=0;j<=item.ny;j++){const r=j/item.ny;for(let i=0;i<=item.nx;i++){const u=i/item.nx*2-1;const p=clothPoint(u,r,t,wind);pos.setXYZ(k++,p[0],p[1],p[2]);}}pos.needsUpdate=true;item.geo.computeVertexNormals();}}
+function updateBadges(t){for(const b of badges){const p=clothPoint(b.u,b.r,t,wind);b.g.position.set(p[0],b.y,p[2]+.12);b.g.rotation.y=Math.sin(t*2+b.x*2)*.025*wind;b.g.rotation.z=Math.sin(t*1.5+b.y)*.025*wind;}}
+function updateWindLines(t,dt){for(const o of windLines){const p=o.line.geometry.attributes.position;for(let i=0;i<o.count;i++){const u=i/(o.count-1);const x=(u-.5)*o.span+Math.sin(t*o.speed+o.phase)*.55*wind;const curl=curlNoise2D(u*2.6+t*.09,o.y*.36+o.phase);const y=o.y+Math.sin(u*7+t*1.2+o.phase)*o.amp*wind+Math.sin(u*14-t*.7+o.seed)*o.05+curl[0]*wind*.8;const z=o.z+Math.sin(u*9+t*.65+o.seed)*.38*wind+curl[1]*wind*.8;p.setXYZ(i,x,y,z);}p.needsUpdate=true;o.line.material.opacity=(.10+(.07*Math.sin(t*.5+o.phase)))*(0.35+wind*.45);}}
+function updateEmbers(t,dt){if(!embers)return;const p=embers.geometry.attributes.position;for(let i=0;i<emberVelocity.length;i++){const v=emberVelocity[i];let x=p.getX(i),y=p.getY(i),z=p.getZ(i);x+=v.side*dt*wind+Math.sin(t*1.4+v.phase)*dt*.08*wind;y+=v.up*dt*(.4+wind*.5);z+=Math.cos(t*.8+v.phase)*dt*.06*wind;if(y>8.3){y=-.15;x=(rand()-.5)*15;z=(rand()-.5)*10-1.2;}if(x>8)x=-8;if(x< -8)x=8;p.setXYZ(i,x,y,z);}p.needsUpdate=true;}
+function animate(){requestAnimationFrame(animate);if(!renderer)return;let dt=Math.min(clock.getDelta(),.04);if(paused)dt=0;const t=clock.elapsedTime;if(skyMaterial)skyMaterial.uniforms.uTime.value=t;controls.update();updateCloth(t);updateBadges(t);updateWindLines(t,dt);updateEmbers(t,dt);composer.render();}
+async function toggleAudio(){const btn=document.getElementById('audio-btn');try{if(audioNodes){audioNodes.gain.gain.setTargetAtTime(0,audioCtx.currentTime,.12);setTimeout(()=>{if(audioNodes){try{audioNodes.source.stop()}catch{}audioNodes=null;}},240);btn.textContent='Wind audio off';btn.setAttribute('aria-pressed','false');return;}audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();await audioCtx.resume();const size=audioCtx.sampleRate*3,buffer=audioCtx.createBuffer(1,size,audioCtx.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<size;i++)data[i]=(Math.random()*2-1)*(.5+Math.random()*.5);const source=audioCtx.createBufferSource();source.buffer=buffer;source.loop=true;const filter=audioCtx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=180+wind*135;filter.Q.value=.65;const gain=audioCtx.createGain();gain.gain.value=0;source.connect(filter);filter.connect(gain);gain.connect(audioCtx.destination);source.start();gain.gain.setTargetAtTime(.12,audioCtx.currentTime,.8);audioNodes={source,filter,gain};btn.textContent='Wind audio on';btn.setAttribute('aria-pressed','true');}catch(e){btn.textContent='Audio unavailable';console.warn(e);}}
+window.addEventListener('keydown',e=>{if(e.code==='Space'&&e.target===document.body){e.preventDefault();wind=Math.min(2.4,wind+.25);document.getElementById('wind-slider').value=wind;document.getElementById('wind-value').textContent=wind.toFixed(2)+'×';}});
+try{init();}catch(err){console.error(err);errorBox.style.display='block';errorBox.textContent='The 3D scene could not start. Please open this file with an internet connection so its Three.js modules can load. Details: '+(err?.message||err);document.getElementById('loading').classList.add('hide');}
+</script>
+</main>
+</body>
+</html>
